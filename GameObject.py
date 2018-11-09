@@ -400,8 +400,7 @@ class Boss(Enemy, object):
         self.deadTimer = 5
         self.player = player
         self.moveChangeCount = 5
-        self.numberOfShot = 5
-        self.timeBetweenShot = 0
+        self.actionCount = 0
 
     def boom(self):
         if self.direction == Right:
@@ -437,32 +436,41 @@ class Boss(Enemy, object):
         # self.env.removeParticle(self.particle)
     def update(self):
 
-
-
+        self.animationCount +=1
+        if self.animationCount > 7:
+            self.animationCount = 0
+        self.moveChangeCount -= 1.0/27.0
         if self.state == die:
             self.deadTimer -=1.0/27.0
             if self.deadTimer < 0 :
                 self.env.removeParticle(self.particle)
-        self.moveChangeCount -= 1.0/27.0
-        self.shotTimer -= 1.0 / 27.0
+        self.actionCount += 1
+        if self.actionCount > 10*27:
+            self.actionCount = 0
+        if self.actionCount >0  and self.actionCount < 5*27:
+            self.shotTimer -= 1.0/27.0
+            if self.shotTimer < 0:
+                self.shot()
+                self.shotTimer = 0.5
 
-        if self.shotTimer < 0:
-            self.boom()
-            self.shotTimer = 0.5
-            return
-
+        #TODO change shot timer to boom timer
+        if self.actionCount >6*27 and self.actionCount <12*27:
+            self.shotTimer -= 1.0 / 27.0
+            if self.shotTimer < 0:
+                self.boom()
+                self.shotTimer = 0.5
 
         if self.moveChangeCount <0:
             self.moveChangeCount = 2
 
             if self.direction == Right:
 
-                self.particle.speed = 5
+                self.particle.speed =5
                 self.particle.angle = -math.pi/2
                 self.direction = Left
             else:
                 self.particle.angle =math.pi / 2
-                self.particle.speed = 5
+                self.particle.speed =5
                 self.direction = Right
         if self.state == die:
             self.deadTimer -= 1.0/27.0
@@ -478,9 +486,8 @@ class Boss(Enemy, object):
             win.blit(bossRight[self.animationCount//3], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
         else:
             win.blit(bossLeft[self.animationCount // 3], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
-        if self.animationCount > 7:
-            self.animationCount = 0
-        self.animationCount += 1
+
+
         # if self.particle.isClimb == True:
         #     self.changeState(climp)
         # if moveSpeed == 0:
