@@ -2,6 +2,7 @@ import  pygame
 from Particle import *
 from Enviroment import *
 from Setup  import  *
+from Effect import *
 
 playerIdleLeft = pygame.transform.scale(pygame.image.load('asset/Char/1/Idle.png'),(playerSize[0],playerSize[1]))
 playerDie = pygame.transform.scale(pygame.image.load('asset/Char/1/die.png'),(playerSize[0],playerSize[1]))
@@ -77,6 +78,7 @@ class Player(GameObject, object):
     def jump(self):
         self.particle.jump()
     def shot(self):
+        p = Explosion(self.x,self.y,explosion,1,4,self.env )
         if not self.shotTimer <= 0:
             return
         self.shotTimer = self.shotCd
@@ -217,7 +219,7 @@ class Boom(GameObject,object):
         self.particle.static = False
         self.env.particles.append(self.particle)
         self.particle.isAffectByGravity = True
-        self.timeToDie = 1
+        self.timeToDie = 3
         self.countT = 0
         self.particle.parent = self
         self._from = _from
@@ -232,6 +234,7 @@ class Boom(GameObject,object):
             if self._from  != particle.parent.name :
                 particle.parent.kill()
 
+        p = Explosion(self.x,self.y-50,explosion,1,1,self.env)
         self.kill()
 
 

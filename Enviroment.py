@@ -2,12 +2,13 @@ from Particle import *
 from Setup  import  *
 from Map   import *
 from params import  *
+from Effect import  *
 class Enviroment:
     def __init__(self,width,height):
         self.width = width
         self.height = height
         self.particles  = []
-
+        self.effects =  []
         self.colour = (255,255,255)
         self.massOfAir =massOfAir
         self.elasticity = elasticity
@@ -72,7 +73,8 @@ class Enviroment:
     def update(self):
         i = 0
         d= 0
-
+        for e in self.effects:
+            e.update()
         collisionCount = 0
         for i,particle in enumerate(self.particles):
 
@@ -141,12 +143,19 @@ class Enviroment:
         for i,p in enumerate(self.particles):
             if particle == p:
                 del self.particles[i]
-
+    def removeEffect(self,effect):
+        for i,e in enumerate(self.effects):
+            if effect == e:
+                del self.effects[i]
     def draw(self):
+
         for p in self.particles:
             if p.static:
                 continue
             p.parent.draw(win)
+
+        for e in self.effects:
+            e.draw(win)
 
 ###########
 
