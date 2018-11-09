@@ -164,10 +164,12 @@ class Particle:
     def moveLeft(self):
 
         if self.isInAir:
-            if self.speed > 2 * moveSpeed:
-                self.speed = 2 * moveSpeed
-            self.accelerate(vector( -math.pi / 2,moveSpeed*airControllLoss))
-            return
+            # if self.speed > 2 * moveSpeed:
+            #     self.speed = 2 * moveSpeed
+            # temp = self.speed
+            # self.accelerate(vector( -math.pi / 2,moveSpeed*airControllLoss))
+            # self.speed = temp
+             return
         else:
             if self.speed > moveSpeed:
                 self.speed =  moveSpeed
@@ -177,9 +179,9 @@ class Particle:
     def moveRight(self):
 
         if self.isInAir:
-            if self.speed > 2 * moveSpeed:
-                self.speed = 2 * moveSpeed
-            self.accelerate(vector(math.pi / 2,moveSpeed*airControllLoss))
+            # if self.speed > 2 * moveSpeed:
+            #     self.speed = 2 * moveSpeed
+            # self.accelerate(vector(math.pi / 2,moveSpeed*airControllLoss))
             return
         else:
             if self.speed >  moveSpeed:
