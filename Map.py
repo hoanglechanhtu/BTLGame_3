@@ -146,7 +146,7 @@ game_map.build_enemy(83, 28, 'enemy1')
 game_map.build_enemy(75, 31, 'enemy1')
 game_map.build_enemy(82, 31, 'enemy3')
 
-game_map.build_enemy(75,35,'enemy4')
+game_map.build_enemy(35,40,'enemy4')
 
 game_map.build_ground_with_grass(19,11,4,12)
 game_map.build_ground_with_grass(23,21,4,22)

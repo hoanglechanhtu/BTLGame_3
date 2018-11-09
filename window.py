@@ -116,15 +116,15 @@ while running:
     redrawGameWindow()
     #char.draw(win)
     env.draw()
-    for p in env.particles:
-
-        if p.type == 1:
-
-
-            pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
-        if p.type == 2:
-            pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
-            pass
+    # for p in env.particles:
+    #
+    #     if p.type == 1:
+    #
+    #
+    #         pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
+    #     if p.type == 2:
+    #         pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
+    #         pass
 
 
     #

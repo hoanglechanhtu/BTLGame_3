@@ -78,7 +78,7 @@ class Player(GameObject, object):
     def jump(self):
         self.particle.jump()
     def shot(self):
-        p = Explosion(self.x,self.y,explosion,1,4,self.env )
+
         if not self.shotTimer <= 0:
             return
         self.shotTimer = self.shotCd

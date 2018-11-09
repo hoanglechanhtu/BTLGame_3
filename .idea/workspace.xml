@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d17001b-4788-40ad-b127-1754cccd6385" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Effect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enviroment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enviroment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameObject.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameObject.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Particle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Particle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/window.py" beforeDir="false" afterPath="$PROJECT_DIR$/window.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,33 +67,33 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="6" />
+          <entry key="py" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="6" />
+          <entry key="Python" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1410" />
+          <entry key="py" value="1419" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1410" />
+          <entry key="Python" value="1419" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/window.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="235">
+              <caret line="126" column="18" lean-forward="true" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="18" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -103,7 +101,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Particle.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
@@ -158,15 +156,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GameObject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="246" column="99" lean-forward="true" selection-start-line="246" selection-start-column="99" selection-end-line="246" selection-end-column="99" />
+            <state relative-caret-position="130">
+              <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1541774578698" expanded="true" signature="2037:2042" ph="..." />
-                <marker date="1541774578698" expanded="true" signature="2294:2299" ph="..." />
-                <marker date="1541774578698" expanded="true" signature="4276:4377" ph="..." />
-                <marker date="1541774578698" expanded="true" signature="7350:7439" ph="..." />
+                <marker date="1541774968540" expanded="true" signature="2037:2042" ph="..." />
+                <marker date="1541774968540" expanded="true" signature="2294:2299" ph="..." />
+                <marker date="1541774968540" expanded="true" signature="4216:4317" ph="..." />
+                <marker date="1541774968540" expanded="true" signature="7290:7379" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Map.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="142" column="38" lean-forward="true" selection-start-line="142" selection-start-column="38" selection-end-line="142" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -185,7 +192,6 @@
     <findStrings>
       <find>bullet</find>
       <find>worl</find>
-      <find>shot</find>
       <find>pari</find>
       <find>s</find>
       <find>bounc</find>
@@ -203,7 +209,6 @@
       <find>print</find>
       <find>play</find>
       <find>collide</find>
-      <find>move</find>
       <find>part</find>
       <find>Jump</find>
       <find>moveLef</find>
@@ -211,8 +216,10 @@
       <find>Enemy</find>
       <find>def wor</find>
       <find>remove</find>
-      <find>Player</find>
+      <find>move</find>
       <find>Boom</find>
+      <find>Player</find>
+      <find>shot</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -226,12 +233,12 @@
         <option value="$PROJECT_DIR$/params.py" />
         <option value="$PROJECT_DIR$/Camera.py" />
         <option value="$PROJECT_DIR$/Setup.py" />
-        <option value="$PROJECT_DIR$/Map.py" />
-        <option value="$PROJECT_DIR$/window.py" />
         <option value="$PROJECT_DIR$/Enviroment.py" />
         <option value="$PROJECT_DIR$/Effect.py" />
-        <option value="$PROJECT_DIR$/GameObject.py" />
         <option value="$PROJECT_DIR$/Particle.py" />
+        <option value="$PROJECT_DIR$/Map.py" />
+        <option value="$PROJECT_DIR$/GameObject.py" />
+        <option value="$PROJECT_DIR$/window.py" />
       </list>
     </option>
   </component>
@@ -377,23 +384,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Map.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="147" selection-start-line="147" selection-end-line="147" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/window.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Enviroment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
@@ -426,20 +416,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GameObject.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="246" column="99" lean-forward="true" selection-start-line="246" selection-start-column="99" selection-end-line="246" selection-end-column="99" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1541774578698" expanded="true" signature="2037:2042" ph="..." />
-            <marker date="1541774578698" expanded="true" signature="2294:2299" ph="..." />
-            <marker date="1541774578698" expanded="true" signature="4276:4377" ph="..." />
-            <marker date="1541774578698" expanded="true" signature="7350:7439" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Particle.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -448,6 +424,37 @@
             <element signature="e#0#13#0" expanded="true" />
             <marker date="1541774668990" expanded="true" signature="423:424" ph="..." />
             <marker date="1541774668990" expanded="true" signature="4608:4614" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="142" column="38" lean-forward="true" selection-start-line="142" selection-start-column="38" selection-end-line="142" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GameObject.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1541774968540" expanded="true" signature="2037:2042" ph="..." />
+            <marker date="1541774968540" expanded="true" signature="2294:2299" ph="..." />
+            <marker date="1541774968540" expanded="true" signature="4216:4317" ph="..." />
+            <marker date="1541774968540" expanded="true" signature="7290:7379" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/window.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="126" column="18" lean-forward="true" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
