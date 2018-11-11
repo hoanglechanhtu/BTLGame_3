@@ -84,9 +84,9 @@ class Player(GameObject, object):
         self.shotTimer = self.shotCd
         self.changeState(shot)
         if self.direction == Right:
-            offset = self.width+ 5
+            offset = self.width+ bulletOffset
         else:
-            offset = -bulletOffset
+            offset = -3*bulletOffset
         p = Bullet(self.particle.x+offset,self.particle.y + self.height/2,bulletSize[0],bulletSize[1],self.env,self.name)
         p.shot(self.direction*math.pi/2)
     def hit(self,particle):
@@ -269,7 +269,7 @@ class Enemy(GameObject, object):
         self.shotCd = EnemyShotCd
         self.shotTimer = self.shotCd
         self.particle.isInAir = True
-        self.deadTimer = 3
+        self.deadTimer = 1
         self.player = player
     def kill(self):
         if self.state == die:

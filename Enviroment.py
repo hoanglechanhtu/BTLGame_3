@@ -5,6 +5,7 @@ from params import  *
 from Effect import  *
 class Enviroment:
     def __init__(self,width,height):
+
         self.width = width
         self.height = height
         self.particles  = []
@@ -25,7 +26,8 @@ class Enviroment:
             'collide':lambda p1,p2: collide(p1,p2)
         }
 
-
+    def setUpPlayer(self,player):
+        self.player = player
     def addFunctions1(self,function_list):
         for func in function_list:
             f = self.function_dict.get(func,  None)
@@ -152,7 +154,8 @@ class Enviroment:
         for p in self.particles:
             if p.static:
                 continue
-            p.parent.draw(win)
+            if not p.parent == None:
+                p.parent.draw(win)
 
         for e in self.effects:
             e.draw(win)

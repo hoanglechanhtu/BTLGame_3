@@ -3,7 +3,7 @@ import math
 import random
 from params import *
 from Setup  import  *
-
+from Effect import *
 
 
 def addVector(vector1 , vector2):
@@ -19,6 +19,12 @@ def boxCollideBox(p1,p2):
     dy = p1.y - p2.y
     distance = math.hypot(dy, dx)
     if p1.getMinX()  < p2.getMaxX() and p1.getMaxX() > p2.getMinX()and p1.getMinY()<p2.getMaxY() and p1.getMaxY() > p2.getMinY() :
+        if p1.isTrigger:
+            p1.hit(p2)
+            return
+        if p2.isTrigger:
+            p2.hit(p1)
+            return
         # if p2.y < p1.y :
         #     p2.isInAir = False
         # if p2.y > p1.y:
@@ -134,6 +140,7 @@ def collide(p1,p2):
 
 class Particle:
     def __init__(self, x,y,type,size=1,mass=1):
+        self.isTrigger = False
         self.parent = None
         self.x = x
         self.y = y
@@ -259,12 +266,13 @@ class CircleParticle(Particle,object):
             self.angle = math.pi - self.angle
 class BoxParticle(Particle,object):
     def __init__(self,x,y,width,height,mass = 1):
+
         self.width = width
         self.height = height
         self.type = boxType
         self.size = self.width*self.height
         self.mass = mass
-        super(BoxParticle,self).__init__(x, y, self.type, self.size, self.mass)
+        super(BoxParticle, self).__init__(x, y, self.type, self.size, self.mass)
     def getMaxX(self):
         return self.x + self.width
     def getMinX(self):
@@ -299,3 +307,21 @@ class BoxParticle(Particle,object):
             self.speed *= elasticity
             self.y = 2 * self.height - self.y
             self.angle = math.pi - self.angle
+
+
+
+class BoxTrigger(BoxParticle, object):
+    def __init__(self,x,y,width,height,env,mass = 1):
+        super(BoxTrigger, self).__init__(x, y, width, height)
+        self.static = True
+        self.isAffectByGravity = False
+        self.isTrigger = True
+        self.env = env
+        self.times = 1
+        self.currentTime = 0
+    def hit(self, particle):
+        if particle.parent.name == 'Player':
+            if self.currentTime < self.times:
+                p = TruckEffect(self.x, self.y - 50, truckRun, 1, 1, self.env)
+                self.currentTime +=1
+

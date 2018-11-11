@@ -26,7 +26,7 @@ d = 0
 
 
 char = Player(playerStartPosition[0]+100,playerStartPosition[1],playerSize[0],playerSize[1],env)
-
+env.setUpPlayer(char)
 d=0
 for layer in game_map.tile_array:
     for tile in layer:
@@ -50,12 +50,11 @@ for layer in game_map.tile_array:
             if i > 0.5:
                 enemy.moveLeft()
         elif tile.type == 'enemy4':
-            boss = Boss(x, y, playerSize[0] * 5, playerSize[1] * 3, char,
-                    env)
-
-        # else:
-        #     pass
-
+            boss = Boss(x, y, playerSize[0] * 5, playerSize[1] * 3, char,env)
+        elif tile.type == 'enemy5':
+            p = BoxTrigger(x,y,playerSize[0],playerSize[1],env)
+            env.particles.append(p)
+        
 print("number " + str(d))
 
 
@@ -116,15 +115,15 @@ while running:
     redrawGameWindow()
     #char.draw(win)
     env.draw()
-    # for p in env.particles:
-    #
-    #     if p.type == 1:
-    #
-    #
-    #         pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
-    #     if p.type == 2:
-    #         pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
-    #         pass
+    for p in env.particles:
+    
+        if p.type == 1:
+    
+    
+            pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
+        if p.type == 2:
+            pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
+            pass
 
 
     #
