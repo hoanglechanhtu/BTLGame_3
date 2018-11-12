@@ -44,6 +44,7 @@ class GameObject:
 class Player(GameObject, object):
     def __init__(self,x,y,width,height,env):
         super(Player,self).__init__(x,y,width,height,env)
+        self.coin = 0
         self.particle = BoxParticle(x,y,width,height)
         self.particle.static = False
         self.direction = Right

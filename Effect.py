@@ -5,6 +5,8 @@ import GameObject as go
 
 explosion =  [pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion1.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion2.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion3.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion4.png'),(playerSize[0]*3,playerSize[1]*3))]
 truckRun = [pygame.transform.scale(pygame.image.load('asset/Enemy/Vehicle/Truck1.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Vehicle/Truck2.png'),(playerSize[0]*3,playerSize[1]*3))]
+coin = [pygame.transform.scale(pygame.image.load('asset/Environment/coin1.png'),(playerSize[0],playerSize[1])),pygame.transform.scale(pygame.image.load('asset/Environment/coin2.png'),(playerSize[0],playerSize[1] ))]
+
 class Effect:
     def __init__(self,x,y,effect,t,numberOfSprite,env):
         self.env = env
@@ -32,6 +34,22 @@ class Explosion(Effect,object):
 
         #TODO automaticly calculate animation
         win.blit(self.effect[self.animationCount//2], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+class CoinEffect(Effect,object):
+    def __init__(self,x,y,effect,t,numberOfSprite,env):
+        super(CoinEffect,self).__init__(x,y,effect,t,numberOfSprite,env)
+        self.timeToStop = 50
+
+    def kill(self):
+        self.env.removeEffect(self)
+    def update(self):
+        self.timeToStop -= 1.0/27.0
+        self.animationCount+=1
+        if self.animationCount > 7:
+            self.animationCount = 1
+        if self.timeToStop <0:
+            self.kill()
+    def draw(self,win):
+        win.blit(self.effect[self.animationCount//4], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
 
 class TruckEffect(Effect,object):
     def __init__(self,x,y,effect,t,numberOfSprite,env):
@@ -49,7 +67,7 @@ class TruckEffect(Effect,object):
             self.timeToStop = 0
             self.spawnEnemyTime -= 1.0/27.0
             if self.spawnEnemyTime <0:
-                e = go.Enemy(self.x+100,self.y+50,playerSize[0],playerSize[1],self.env.player,self.env)
+                e = go.Enemy(self.x+200,self.y+50,playerSize[0],playerSize[1],self.env.player,self.env)
                 e.moveRight()
                 e.jump()
                 self.spawnEnemyTime = 1

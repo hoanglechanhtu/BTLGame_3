@@ -121,21 +121,15 @@ def boxCollideCircle(p1,p2):
         p1.speed *= elasticity
         p2.speed *= elasticity
 def collide(p1,p2):
+    # bullet go through enemy if come from enemy
+    if not p1.parent == None:
+        if not p2.parent == None:
+            if p1.parent.name == 'Bullet' and p1.parent._from == p2.parent.name:
+                return
+            if p2.parent.name == 'Bullet' and p2.parent._from == p1.parent.name:
+                return
 
-    # if abs(p1.x- p2.x) > 2*IMG_WIDTH:
-    #     return
-    # if abs(p1.y - p2.y) >2*IMG_HEIGHT :
-    #     return
     boxCollideBox(p1, p2)
-    # return
-    # if p1.type == 1 and p2.type == 1:
-    #     circleCollideCircle(p1,p2)
-    # if p1.type == 1 and p2.type == 2:
-    #     boxCollideCircle(p2,p1)
-    # if p1.type == 2 and p2.type == 2:
-    #
-    # if p1.type ==2 and p2.type == 1:
-    #     boxCollideCircle(p1,p2)
 
 
 class Particle:
@@ -165,8 +159,9 @@ class Particle:
         if self.isInAir:
             return
         else:
-
+            self.isClimb = False
             self.isInAir = True
+            self.firstMove = True
             self.accelerate(jumpVector)
     def moveLeft(self):
 
@@ -319,9 +314,31 @@ class BoxTrigger(BoxParticle, object):
         self.env = env
         self.times = 1
         self.currentTime = 0
+        self.isHit = False
     def hit(self, particle):
         if particle.parent.name == 'Player':
             if self.currentTime < self.times:
                 p = TruckEffect(self.x, self.y - 50, truckRun, 1, 1, self.env)
                 self.currentTime +=1
-
+            self.isHit = True
+class CoinTrigger(BoxParticle, object):
+    def __init__(self,x,y,width,height,env,mass = 1):
+        super(CoinTrigger, self).__init__(x, y, width, height)
+        self.static = True
+        self.isAffectByGravity = False
+        self.isTrigger = True
+        self.env = env
+        self.times = 1
+        self.currentTime = 0
+        self.isHit = False
+        self.c = CoinEffect(self.x,self.y,coin,1,1,self.env)
+    def hit(self, particle):
+        if particle.parent.name == 'Player':
+            if self.currentTime < self.times:
+                # add coin to player
+                self.env.player.coin +=1
+                self.env.removeParticle(self)
+                self.env.removeEffect(self.c)
+                self.currentTime +=1
+                print  self.env.player.coin
+            self.isHit = True

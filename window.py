@@ -53,9 +53,10 @@ for layer in game_map.tile_array:
             boss = Boss(x, y, playerSize[0] * 5, playerSize[1] * 3, char,env)
         elif tile.type == 'enemy5':
             p = BoxTrigger(x,y,playerSize[0],playerSize[1],env)
+            c = CoinTrigger(x,y+100,playerSize[0],playerSize[1],env)
+            env.particles.append(c)
             env.particles.append(p)
         
-print("number " + str(d))
 
 
 
@@ -76,7 +77,7 @@ while running:
 
     last = pygame.time.get_ticks()/1000.0
     #clock.tick(27)
-    print( 1.0/(last -first))
+    #print( 1.0/(last -first))
     first = last
     win.fill(env.colour)
     keys = pygame.key.get_pressed()

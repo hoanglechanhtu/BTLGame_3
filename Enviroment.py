@@ -127,7 +127,7 @@ class Enviroment:
                     #     else:
                     #
                     #         collide(particle,particle2)
-        print(collisionCount)
+       # print(collisionCount)
         # print 'd =' + str(d)
         # print'i =' + str(i)
 
