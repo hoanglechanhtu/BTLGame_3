@@ -4,7 +4,7 @@ import random
 from params import *
 from Setup  import  *
 from Effect import *
-
+import  GameObject as go
 
 def addVector(vector1 , vector2):
         x = math.sin(vector1.angle)*vector1.length + math.sin(vector2.angle)*vector2.length
@@ -322,10 +322,34 @@ class BoxTrigger(BoxParticle, object):
         self.times = 1
         self.currentTime = 0
         self.isHit = False
+        self.env.particles.append(self)
     def hit(self, particle):
         if particle.parent.name == 'Player':
             if self.currentTime < self.times:
                 p = TruckEffect(self.x+1000, self.y - 120, truckRun, 1, 1, self.env)
+
+                self.currentTime +=1
+            self.isHit = True
+class DuTrigger(BoxParticle, object):
+    def __init__(self,x,y,width,height,env,mass = 1):
+        super(DuTrigger, self).__init__(x, y, width, height)
+        self.static = True
+        self.isAffectByGravity = False
+        self.isTrigger = True
+        self.env = env
+        self.times = 1
+        self.currentTime = 0
+        self.numberOfEnemy = random.randint(3,5)
+        self.isHit = False
+        self.env.particles.append(self)
+    def hit(self, particle):
+        if particle.parent.name == 'Player':
+            if self.currentTime < self.times:
+                i = -5
+                while self.numberOfEnemy >0:
+                    e = go.Enemy(self.x+i*100,self.y- 1000 - random.randint(-200,200),playerSize[0],playerSize[1],self.env.player,self.env)
+                    self.numberOfEnemy -= 1
+                    i+=1
                 self.currentTime +=1
             self.isHit = True
 class CoinTrigger(BoxParticle, object):

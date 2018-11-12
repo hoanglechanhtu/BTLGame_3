@@ -52,19 +52,25 @@ for layer in game_map.tile_array:
         elif tile.type == "box":
            box = Box(x,y,playerSize[0],playerSize[1],env)
 
-        elif tile.type == "enemy1"or tile.type == "enemy2" or tile.type == "enemy3":
+        elif tile.type == "enemy1":
             enemy = Enemy(x,y,playerSize[0],playerSize[1],char,env)
             i = random.randint(0,1)
+            if i > 0.5:
+                enemy.moveLeft()
+        elif tile.type == "enemy2":
+            enemy = MachineGun(x, y, playerSize[0]*2, playerSize[1]*2, char, env)
+            i = random.randint(0, 1)
             if i > 0.5:
                 enemy.moveLeft()
         elif tile.type == 'enemy4':
             boss = Boss(x, y, playerSize[0] * 5, playerSize[1] * 3, char,env)
         elif tile.type == 'enemy5':
             p = BoxTrigger(x,y,playerSize[0],playerSize[1],env)
-            env.particles.append(p)
+
         elif tile.type == 'upgrade':
             p = UpgradeTrigger(x,y,playerSize[0],playerSize[1],env)
-
+        elif tile.type == 'enemy6':
+            d = DuTrigger(x,y,playerSize[0],playerSize[1],env)
 
 print("number " + str(d))
 

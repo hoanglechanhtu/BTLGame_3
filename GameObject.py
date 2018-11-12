@@ -5,15 +5,29 @@ from Setup  import  *
 from Effect import *
 fireSound = pygame.mixer.Sound('asset/Music/fire.wav')
 hitSound = pygame.mixer.Sound('asset/Music/hit.wav')
-playerIdleLeft = pygame.transform.scale(pygame.image.load('asset/Char/1/Idle.png'),(playerSize[0],playerSize[1]))
-playerDie = pygame.transform.scale(pygame.image.load('asset/Char/1/die.png'),(playerSize[0],playerSize[1]))
+playerIdleLeft = pygame.transform.scale(pygame.image.load('asset/Char/2/Idle.png'),(playerSize[0],playerSize[1]))
+playerDie = pygame.transform.scale(pygame.image.load('asset/Char/2/die.png'),(playerSize[0],playerSize[1]))
 playerIdleRight =  pygame.transform.flip(playerIdleLeft,True,False)
-playerRunLeft = [pygame.transform.scale(pygame.image.load('asset/Char/1/Run1.png'),(playerSize[0],playerSize[1])),pygame.transform.scale(pygame.image.load('asset/Char/1/Run2.png'),(playerSize[0],playerSize[1]))]
+playerRunLeft = [pygame.transform.scale(pygame.image.load('asset/Char/2/Run1.png'),(playerSize[0],playerSize[1])),pygame.transform.scale(pygame.image.load('asset/Char/2/Run2.png'),(playerSize[0],playerSize[1]))]
 playerRunRight = [pygame.transform.flip(playerRunLeft[0],True,False),pygame.transform.flip(playerRunLeft[1],True,False)]
-playerFireLeft = pygame.transform.scale(pygame.image.load('asset/Char/1/Fire.png'),(playerSize[0],playerSize[1]))
+playerFireLeft = pygame.transform.scale(pygame.image.load('asset/Char/2/Fire.png'),(playerSize[0],playerSize[1]))
 playerFireRight = pygame.transform.flip(playerFireLeft,True,False)
-playerClimpLeft =  pygame.transform.scale(pygame.image.load('asset/Char/1/WallS.png'),(playerSize[0],playerSize[1]))
+playerClimpLeft =  pygame.transform.scale(pygame.image.load('asset/Char/2/WallS.png'),(playerSize[0],playerSize[1]))
 playerClimpRight = pygame.transform.flip(playerClimpLeft,True,False)
+
+
+
+enemyIdleLeft = pygame.transform.scale(pygame.image.load('asset/Char/1/Idle.png'),(playerSize[0],playerSize[1]))
+enemyDie = pygame.transform.scale(pygame.image.load('asset/Char/1/die.png'),(playerSize[0],playerSize[1]))
+enemyIdleRight =  pygame.transform.flip(enemyIdleLeft,True,False)
+enemyRunLeft = [pygame.transform.scale(pygame.image.load('asset/Char/1/Run1.png'),(playerSize[0],playerSize[1])),pygame.transform.scale(pygame.image.load('asset/Char/1/Run2.png'),(playerSize[0],playerSize[1]))]
+enemyRunRight = [pygame.transform.flip(enemyRunLeft[0],True,False),pygame.transform.flip(enemyRunLeft[1],True,False)]
+enemyFireLeft = pygame.transform.scale(pygame.image.load('asset/Char/1/Fire.png'),(playerSize[0],playerSize[1]))
+enemyFireRight = pygame.transform.flip(enemyFireLeft,True,False)
+enemyClimpLeft =  pygame.transform.scale(pygame.image.load('asset/Char/1/WallS.png'),(playerSize[0],playerSize[1]))
+enemyClimpRight = pygame.transform.flip(enemyClimpLeft,True,False)
+
+
 bullet =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet.png'),(bulletSize[0],bulletSize[1]))
 bullet2 =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet.png'),(bulletSize[0]*2,bulletSize[1]*2))
 bullet3 =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet.png'),(bulletSize[0]*3,bulletSize[1]*3))
@@ -22,6 +36,9 @@ bossBullet =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet
 bossRight = [pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/Heli1.png'),(playerSize[0]*5,playerSize[1]*4)),pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/Heli2.png'),(playerSize[0]*5,playerSize[1]*4)),pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/Heli3.png'),(playerSize[0]*5,playerSize[1]*4))]
 bossLeft = [pygame.transform.flip(bossRight[0],True,False),pygame.transform.flip(bossRight[1],True,False),pygame.transform.flip(bossRight[2],True,False)]
 boom = [pygame.image.load('asset/Enemy/Boss/Boom1.png'),pygame.image.load('asset/Enemy/Boss/Boom2.png'),pygame.image.load('asset/Enemy/Boss/Boom3.png'),pygame.image.load('asset/Enemy/Boss/Boom4.png')]
+machineGunLeft = [pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/MachineGun.png'),(playerSize[0]*2,playerSize[1]*2)),pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/MachineGun2.png'),(playerSize[0]*2,playerSize[1]*2))]
+machineGunRight = [pygame.transform.flip(machineGunLeft[0],True,False),pygame.transform.flip(machineGunLeft[1],True,False)]
+duEnemy = pygame.transform.scale(pygame.image.load('asset/Char/1/Du.png'),(playerSize[0]*2,playerSize[1]*2))
 class GameObject:
     def __init__(self,x,y,width,height,env):
         self.name = "GameObject"
@@ -311,7 +328,7 @@ class Enemy(GameObject, object):
         self.shotCd = EnemyShotCd
         self.shotTimer = self.shotCd
         self.particle.isInAir = True
-        self.deadTimer = 1
+        self.deadTimer = 0.1
         self.player = player
     def kill(self):
         if self.state == die:
@@ -364,6 +381,9 @@ class Enemy(GameObject, object):
         pass
 
     def update(self):
+        if self.particle.isInAir:
+            self.particle.speed = 5
+            return
         if self.state == die:
             self.deadTimer -= 1.0/27.0
             if self.deadTimer < 0:
@@ -382,49 +402,140 @@ class Enemy(GameObject, object):
                 self.shot()
     def draw(self, win):
         # TODO move to update function
+        if self.particle.isInAir:
+            win.blit(duEnemy,(int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+            return
         if self.particle.isClimb == True:
             self.changeState(climp)
         if moveSpeed == 0:
             self.changeState(idle)
 
         if self.state == die:
-            win.blit(playerDie, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+            win.blit(enemyDie, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
             return
 
         if self.direction == Right:
             if self.state == climp:
-                win.blit(playerClimpRight, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                win.blit(enemyClimpRight, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
 
             if self.state == shot:
                 self.animationCount += 1
-                win.blit(playerFireRight, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                win.blit(enemyFireRight, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
                 if self.animationCount > 5:
                     self.changeState(idle)
             if self.state == idle:
-                win.blit(playerIdleRight, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                win.blit(enemyIdleRight, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
             if self.state == running:
                 if self.animationCount > 10:
                     self.animationCount = 0
                 self.animationCount += 1
-                win.blit(playerRunRight[self.animationCount // 6],
+                win.blit(enemyRunRight[self.animationCount // 6],
                          (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
         else:
             if self.state == climp:
-                win.blit(playerClimpLeft, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                win.blit(enemyClimpLeft, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
             if moveSpeed == 0:
                 self.changeState(idle)
             if self.state == shot:
                 self.animationCount += 1
-                win.blit(playerFireLeft, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                win.blit(enemyFireLeft, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
                 if self.animationCount > 5:
                     self.changeState(idle)
             if self.state == idle:
-                win.blit(playerIdleLeft, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                win.blit(enemyIdleLeft, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
             if self.state == running:
                 if self.animationCount > 10:
                     self.animationCount = 0
                 self.animationCount += 1
-                win.blit(playerRunLeft[self.animationCount // 6],
+                win.blit(enemyRunLeft[self.animationCount // 6],
+                         (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+
+
+
+class MachineGun(Enemy, object):
+    def __init__(self,x,y,width,height,player,env):
+        super(MachineGun,self).__init__(x,y,width,height,player,env)
+        self.hp = 5
+        self.shotTimer = EnemyShotCd/5.0
+    def kill(self):
+        if self.state == die:
+            return
+        if self.hp <0:
+
+            self.changeState(die)
+            self.particle.static = False
+            self.particle.height = self.particle.height/2
+            #TODO add die aniamtion
+            self.env.removeParticle(self.particle)
+            p = UpgradeTrigger(self.x, self.y, playerSize[0], playerSize[1], self.env)
+
+        else:
+            self.hp -=1
+
+    def shot(self):
+        if not self.shotTimer <= 0:
+            return
+        self.shotTimer = 0.2
+        self.changeState(shot)
+        if self.direction == Right:
+            offset = self.width + 5
+        else:
+            offset = -bulletOffset
+        p = Bullet(self.particle.x + offset, self.particle.y + 50, bulletSize[0]*3, bulletSize[1]*3, self.env,self.name)
+        p.shot(self.direction * math.pi / 2)
+        p.particle.speed = 20
+
+    def hit(self, particle):
+        # print "hit "+ particle.parent.name
+        pass
+
+    def draw(self, win):
+        # TODO move to update function
+        if self.particle.isClimb == True:
+            self.changeState(climp)
+        if moveSpeed == 0:
+            self.changeState(idle)
+
+        # if self.state == die:
+        #     win.blit(playerDie, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+        #     return
+
+        if self.direction == Right:
+            if self.state == climp:
+                win.blit(machineGunRight[0], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+
+            if self.state == shot:
+                self.animationCount += 1
+                win.blit(machineGunRight[self.animationCount//2], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                if self.animationCount > 2:
+                    self.animationCount = 0
+                    self.changeState(idle)
+            if self.state == idle:
+                win.blit(machineGunRight[0], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+            if self.state == running:
+                if self.animationCount > 2:
+                    self.animationCount = 0
+                self.animationCount += 1
+                win.blit(machineGunRight[0],
+                         (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+        else:
+            if self.state == climp:
+                win.blit(machineGunLeft[0], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+            if moveSpeed == 0:
+                self.changeState(idle)
+            if self.state == shot:
+                self.animationCount += 1
+                win.blit(machineGunLeft[self.animationCount//2], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+                if self.animationCount > 2:
+                    self.animationCount = 0
+                    self.changeState(idle)
+            if self.state == idle:
+                win.blit(machineGunLeft[0], (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+            if self.state == running:
+                if self.animationCount > 10:
+                    self.animationCount = 0
+                self.animationCount += 1
+                win.blit(machineGunLeft[0],
                          (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
 
 

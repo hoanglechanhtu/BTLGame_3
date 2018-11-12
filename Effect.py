@@ -70,9 +70,10 @@ class TruckEffect(Effect,object):
             self.spawnEnemyTime -= 1.0/27.0
             if self.spawnEnemyTime <0:
                 e = go.Enemy(self.x+200,self.y+50,playerSize[0],playerSize[1],self.env.player,self.env)
-                e.moveRight()
+                e.changeState(idle)
+                e.moveLeft()
                 e.jump()
-                self.spawnEnemyTime = 1
+                self.spawnEnemyTime = 2
                 self.numberOfEnemy -=1
             return
         self.animationCount+=1
