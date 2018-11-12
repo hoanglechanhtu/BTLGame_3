@@ -335,6 +335,7 @@ class CoinTrigger(BoxParticle, object):
         self.isAffectByGravity = False
         self.isTrigger = True
         self.env = env
+        self.env.particles.append(self)
         self.times = 1
         self.currentTime = 0
         self.isHit = False
@@ -343,6 +344,29 @@ class CoinTrigger(BoxParticle, object):
         if particle.parent.name == 'Player':
             if self.currentTime < self.times:
                 # add coin to player
+                self.env.player.coin +=1
+                self.env.removeParticle(self)
+                self.env.removeEffect(self.c)
+                self.currentTime +=1
+                print  self.env.player.coin
+            self.isHit = True
+
+class UpgradeTrigger(BoxParticle, object):
+    def __init__(self,x,y,width,height,env,mass = 1):
+        super(UpgradeTrigger, self).__init__(x, y, width, height)
+        self.static = True
+        self.isAffectByGravity = False
+        self.isTrigger = True
+        self.env = env
+        self.env.particles.append(self)
+        self.times = 1
+        self.currentTime = 0
+        self.isHit = False
+        self.c = CoinEffect(self.x,self.y,upgrade,1,1,self.env)
+    def hit(self, particle):
+        if particle.parent.name == 'Player':
+            if self.currentTime < self.times:
+                self.env.player.upgrade +=1
                 self.env.player.coin +=1
                 self.env.removeParticle(self)
                 self.env.removeEffect(self.c)

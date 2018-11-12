@@ -9,7 +9,11 @@ from Particle import *
 from start_screen import *
 
 (width,height) = (SCREEN_WIDTH,SCREEN_HEIGHT)
+pygame.mixer.music.load('asset/Music/backgroundMusic.mp3')
+##header file
 
+
+#pygame.mixer.music.play(-1)
 
 pygame.display.set_caption('Tutorial')
 background_colour = (255,255,255)
@@ -58,6 +62,9 @@ for layer in game_map.tile_array:
         elif tile.type == 'enemy5':
             p = BoxTrigger(x,y,playerSize[0],playerSize[1],env)
             env.particles.append(p)
+        elif tile.type == 'upgrade':
+            p = UpgradeTrigger(x,y,playerSize[0],playerSize[1],env)
+
 
 print("number " + str(d))
 

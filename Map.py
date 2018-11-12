@@ -114,6 +114,7 @@ game_map.build_ground_with_grass(25,8,10,9)
 game_map.build_ground_with_grass(35,3,10,4)
 game_map.build_ground_with_grass(45,12,10,13)
 game_map.build_ground_with_grass(55,3, 15,4)
+game_map.build_tile_with_type(45,13,'upgrade')
 game_map.build_tile_with_type(65, 4, 'enemy1')
 
 game_map.build_ground_with_grass(72,9,16,4)
@@ -134,12 +135,15 @@ game_map.build_water(143,2,27,3)
 game_map.build_tile_with_type(160,4, 'enemy5')
 game_map.build_tile_with_type(155,11, 'enemy6')
 game_map.build_ground_with_grass(140,10,10,3)
+game_map.build_tile_with_type(145,11, 'enemy5')
 game_map.build_ground_with_grass(165,3,50,4)
-game_map.build_tile_with_type(65,20, 'enemy4')
+game_map.build_tile_with_type(55,20, 'enemy4')
 game_map.build_ground_with_grass(185,8,3,5)
+game_map.build_tile_with_type(185, 9, 'upgrade')
 game_map.build_ground_with_grass(192,11,10,3)
 game_map.build_ground_with_grass(205,15,10,3)
 game_map.build_tile_with_type(195, 21, 'enemy3')
+
 
 
 

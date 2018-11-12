@@ -3,7 +3,8 @@ from Particle import *
 from Enviroment import *
 from Setup  import  *
 from Effect import *
-
+fireSound = pygame.mixer.Sound('asset/Music/fire.wav')
+hitSound = pygame.mixer.Sound('asset/Music/hit.wav')
 playerIdleLeft = pygame.transform.scale(pygame.image.load('asset/Char/1/Idle.png'),(playerSize[0],playerSize[1]))
 playerDie = pygame.transform.scale(pygame.image.load('asset/Char/1/die.png'),(playerSize[0],playerSize[1]))
 playerIdleRight =  pygame.transform.flip(playerIdleLeft,True,False)
@@ -14,6 +15,9 @@ playerFireRight = pygame.transform.flip(playerFireLeft,True,False)
 playerClimpLeft =  pygame.transform.scale(pygame.image.load('asset/Char/1/WallS.png'),(playerSize[0],playerSize[1]))
 playerClimpRight = pygame.transform.flip(playerClimpLeft,True,False)
 bullet =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet.png'),(bulletSize[0],bulletSize[1]))
+bullet2 =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet.png'),(bulletSize[0]*2,bulletSize[1]*2))
+bullet3 =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet.png'),(bulletSize[0]*3,bulletSize[1]*3))
+bullet4 =  pygame.transform.scale(pygame.image.load('asset/Environment/bulletMax.png'),(bulletSize[0]*3,bulletSize[1]*3))
 bossBullet =  pygame.transform.scale(pygame.image.load('asset/Environment/bullet.png'),(bulletSize[0]*3,bulletSize[1]*3))
 bossRight = [pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/Heli1.png'),(playerSize[0]*5,playerSize[1]*4)),pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/Heli2.png'),(playerSize[0]*5,playerSize[1]*4)),pygame.transform.scale(pygame.image.load('asset/Enemy/Boss/Heli3.png'),(playerSize[0]*5,playerSize[1]*4))]
 bossLeft = [pygame.transform.flip(bossRight[0],True,False),pygame.transform.flip(bossRight[1],True,False),pygame.transform.flip(bossRight[2],True,False)]
@@ -56,6 +60,7 @@ class Player(GameObject, object):
         self.shotCd = PlayerShotCd
         self.shotTimer = 0
         self.particle.isInAir =True
+        self.upgrade = 0
     def kill(self):
         self.changeState(die)
 
@@ -88,8 +93,15 @@ class Player(GameObject, object):
             offset = self.width+ bulletOffset
         else:
             offset = -3*bulletOffset
-        p = Bullet(self.particle.x+offset,self.particle.y + self.height/2,bulletSize[0],bulletSize[1],self.env,self.name)
+        p = Bullet(self.particle.x+offset,self.particle.y + self.height/2 - self.upgrade*5,bulletSize[0],bulletSize[1],self.env,self.name)
+        if self.upgrade == 1:
+            p.setBullet(bullet2)
+        elif self.upgrade == 2:
+            p.setBullet(bullet3)
+        elif self.upgrade == 3:
+            p.setBullet(bullet4)
         p.shot(self.direction*math.pi/2)
+
     def hit(self,particle):
         #print "hit "+ particle.parent.name
         pass
@@ -212,11 +224,13 @@ class Bullet(GameObject,object):
         self._from = _from
         self.name = "Bullet"
         self.particle.mass = 0.0001
+        fireSound.play()
         if self.width > 2*bulletSize[0]:
             self.bullet = bossBullet
         else:
             self.bullet = bullet
-
+    def setBullet(self,bullet):
+        self.bullet = bullet
     def shot(self,angle):
         self.particle.accelerate(vector(angle,bulletSpeed))
     def hit(self,particle):
@@ -302,6 +316,7 @@ class Enemy(GameObject, object):
     def kill(self):
         if self.state == die:
             return
+        c = CoinTrigger(self.x,self.y,playerSize[0]/2,playerSize[0]/2,self.env)
         self.changeState(die)
         self.particle.static = False
         self.particle.height = self.particle.height/2
@@ -430,7 +445,7 @@ class Boss(Enemy, object):
         self.particle.isAffectByGravity = False
         self.deadTimer = 5
         self.player = player
-        self.moveChangeCount = 5
+        self.moveChangeCount =10
         self.actionCount = 0
 
     def boom(self):
@@ -459,7 +474,7 @@ class Boss(Enemy, object):
             self.changeState(die)
             self.particle.isAffectByGravity = True
         self.hp -=1
-
+        hitSound.play()
 
         #self.changeState(die)
         #self.particle.static = False
@@ -492,7 +507,7 @@ class Boss(Enemy, object):
                 self.shotTimer = 0.5
 
         if self.moveChangeCount <0:
-            self.moveChangeCount = 2
+            self.moveChangeCount = 10
 
             if self.direction == Right:
 

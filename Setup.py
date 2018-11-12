@@ -1,10 +1,10 @@
 import  math
+import pygame
 class vector:
     def __init__(self,angle,length):
         self.angle = angle
         self.length = length
 
-##header file
 
 updateRate = 1.0/60
 drag =1
