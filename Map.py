@@ -16,7 +16,7 @@ down_tile_left = pygame.image.load('asset/Environment/DownTileLeft.png')
 down_tile_right = pygame.image.load('asset/Environment/DownTileRight.png')
 ladder = pygame.image.load('asset/Environment/ladder.png')
 up_tile_grass = pygame.transform.scale(pygame.image.load('asset/Environment/ground_with_grass_2.jpg'), (IMG_WIDTH, IMG_HEIGHT))
-up_tile_normal = pygame.image.load('asset/Environment/UpTileNormal.png')
+up_tile_normal = pygame.transform.scale(pygame.image.load('asset/Environment/UpTileNormal.png'),(IMG_WIDTH, IMG_HEIGHT))
 
 #load background
 bg1 = pygame.transform.scale(pygame.image.load('asset/Environment/background/plx-1.png') , (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -65,7 +65,7 @@ class Tile:
         self.img = img
 class Map:
     def __init__(self):
-        self.tile_array = [[0 for i in range(0, 100)] for j in range(0, 95)]
+        self.tile_array = [[0 for i in range(0, 300)] for j in range(0, 95)]
 
     def build_ground_no_grass(self, top_left_index_X, top_left_index_Y, length, depth):
         # the rest is simply rocks
@@ -73,6 +73,12 @@ class Map:
             for j in range(top_left_index_X, top_left_index_X + length):
                 self.tile_array[NUM_TILES_LVL_VERTICAL - 2 - i][j] = Tile('center', j, NUM_TILES_LVL_VERTICAL - 2 - i)
                 self.tile_array[NUM_TILES_LVL_VERTICAL - 2 - i][j].set_img(center_tile)
+
+    def build_water(self, top_left_index_X, top_left_index_Y, length, depth):
+        for i in range(top_left_index_Y - depth, top_left_index_Y):
+            for j in range(top_left_index_X, top_left_index_X + length):
+                self.tile_array[NUM_TILES_LVL_VERTICAL - 2 - i][j] = Tile('water', j, NUM_TILES_LVL_VERTICAL - 2 - i)
+                self.tile_array[NUM_TILES_LVL_VERTICAL - 2 - i][j].set_img(up_tile_normal)
 
     def build_ground_with_grass(self, top_left_index_X, top_left_index_Y, length, depth):
         #length is the number of tiles horizontally for this section of the ground
@@ -89,8 +95,8 @@ class Map:
     def build_box(self, top_left_index_X, top_left_index_Y):
         self.tile_array[NUM_TILES_LVL_VERTICAL - 1 - top_left_index_Y][top_left_index_X] = Tile('box', top_left_index_X, NUM_TILES_LVL_VERTICAL - 1 - top_left_index_Y)
 
-    def build_enemy(self, top_left_index_X, top_left_index_Y, enemyType):
-        self.tile_array[NUM_TILES_LVL_VERTICAL - 1 - top_left_index_Y][top_left_index_X] = Tile(enemyType, top_left_index_X, NUM_TILES_LVL_VERTICAL - 1 - top_left_index_Y)
+    def build_tile_with_type(self, top_left_index_X, top_left_index_Y, type):
+        self.tile_array[NUM_TILES_LVL_VERTICAL - 1 - top_left_index_Y][top_left_index_X] = Tile(type, top_left_index_X, NUM_TILES_LVL_VERTICAL - 1 - top_left_index_Y)
 
     def draw(self, index_list):
         count = 0;
@@ -102,107 +108,35 @@ class Map:
 
 
 game_map = Map()
-game_map.build_ground_with_grass(0,11,10,2)
-game_map.build_box(6, 4)
-game_map.build_box(7, 4)
-game_map.build_box(8, 4)
-game_map.build_ground_with_grass(6,3,4,4)
-game_map.build_ground_no_grass(0,9,6,10)
-game_map.build_enemy(25, 22, 'enemy1')
-game_map.build_enemy(32, 30, 'enemy2')
-game_map.build_enemy(35, 30, 'enemy1')
+game_map.build_ground_with_grass(0,3,25,4)
+game_map.build_tile_with_type(20, 4, 'enemy1')
+game_map.build_ground_with_grass(25,8,10,9)
+game_map.build_ground_with_grass(35,3,10,4)
+game_map.build_ground_with_grass(45,12,10,13)
+game_map.build_ground_with_grass(55,3, 15,4)
+game_map.build_tile_with_type(65, 4, 'enemy1')
 
-game_map.build_box(41,18)
-game_map.build_box(42,18)
-game_map.build_box(43,18)
-game_map.build_box(44,18)
-game_map.build_box(45,18)
-game_map.build_box(41,19)
-game_map.build_box(42,19)
-game_map.build_box(43,19)
-game_map.build_box(44,19)
-game_map.build_box(41,20)
-game_map.build_box(42,20)
-game_map.build_box(43,20)
-game_map.build_box(41,21)
-game_map.build_box(42,21)
+game_map.build_ground_with_grass(72,9,16,4)
+game_map.build_tile_with_type(80, 10, 'upgrade')
+game_map.build_ground_with_grass(90,24,3,25)
+game_map.build_ground_with_grass(93,3,50,4)
+game_map.build_tile_with_type(110, 4, 'enemy1')
+game_map.build_tile_with_type(125, 4, 'enemy1')
 
-game_map.build_enemy(49, 18, 'enemy3')
-game_map.build_enemy(60, 14, 'enemy1')
+game_map.build_ground_with_grass(93,3,50,4)
+game_map.build_ground_with_grass(98,23,10,3)
+game_map.build_ground_with_grass(111,20,10,3)
+game_map.build_tile_with_type(117, 21, 'enemy1')
 
-game_map.build_enemy(65, 14, 'enemy1')
-game_map.build_enemy(69, 14, 'enemy2')
-game_map.build_enemy(75, 14, 'enemy3')
+game_map.build_tile_with_type(135, 4, 'box')
+game_map.build_water(143,2,27,3)
+game_map.build_tile_with_type(160,3, 'enemy5')
+game_map.build_ground_with_grass(165,3,50,4)
+game_map.build_ground_with_grass(185,8,3,5)
+game_map.build_ground_with_grass(192,11,10,3)
+game_map.build_ground_with_grass(205,15,10,3)
+game_map.build_tile_with_type(195, 21, 'enemy3')
 
-game_map.build_enemy(65, 24, 'enemy3')
-game_map.build_enemy(69, 24, 'enemy3')
-game_map.build_enemy(72, 24, 'enemy2')
-
-game_map.build_enemy(62, 28, 'enemy1')
-game_map.build_enemy(73, 28, 'enemy1')
-game_map.build_enemy(79, 28, 'enemy2')
-game_map.build_enemy(83, 28, 'enemy1')
-
-game_map.build_enemy(75, 31, 'enemy1')
-game_map.build_enemy(82, 31, 'enemy3')
-
-game_map.build_enemy(35,40,'enemy4')
-game_map.build_enemy(35,35,'enemy5')
-
-game_map.build_ground_with_grass(19,11,4,12)
-game_map.build_ground_with_grass(23,21,4,22)
-game_map.build_ground_with_grass(27,29,10,30)
-game_map.build_ground_with_grass(37,25,4,26)
-game_map.build_ground_with_grass(41,17,10,4)
-game_map.build_ground_no_grass(41,13,8,2)
-game_map.build_ground_no_grass(41,11,6,2)
-game_map.build_ground_no_grass(41,9,4,10)
-
-game_map.build_ground_with_grass(55,13,30,14)
-game_map.build_box(81,14)
-game_map.build_box(82,14)
-game_map.build_box(83,14)
-game_map.build_box(84,14)
-game_map.build_box(82,15)
-game_map.build_box(83,15)
-
-game_map.build_box(75,24)
-game_map.build_box(76,24)
-game_map.build_box(75,25)
-game_map.build_box(76,25)
-
-game_map.build_box(75,24)
-game_map.build_box(76,24)
-game_map.build_box(75,25)
-game_map.build_box(76,25)
-
-game_map.build_ground_no_grass(85, 13, 5, 2)
-game_map.build_ground_no_grass(85, 18, 7, 5)
-game_map.build_ground_with_grass(92, 18, 2, 1)
-game_map.build_ground_with_grass(92, 19, 1, 1)
-game_map.build_ground_no_grass(80, 23, 12, 5)
-
-game_map.build_ground_no_grass(60, 23, 19, 3)
-game_map.build_ground_no_grass(62, 20, 16, 2)
-game_map.build_ground_no_grass(73, 18, 3, 3)
-game_map.build_ground_no_grass(65, 18, 3, 1)
-
-game_map.build_ground_no_grass(60, 30, 1, 7)
-game_map.build_ground_no_grass(91, 30, 1, 9)
-game_map.build_ground_no_grass(62, 27, 4, 1)
-game_map.build_ground_no_grass(68, 27, 6, 1)
-game_map.build_ground_no_grass(71, 27, 19, 1)
-
-game_map.build_ground_no_grass(61, 30, 8, 1)
-game_map.build_ground_no_grass(72, 30, 7, 1)
-game_map.build_ground_no_grass(80, 30, 5, 1)
-game_map.build_ground_no_grass(87, 30, 4, 1)
-
-game_map.build_ground_no_grass(65, 33, 16, 1)
-game_map.build_ground_no_grass(82, 33, 9, 1)
-
-game_map.build_ground_no_grass(64, 40, 1, 10)
-game_map.build_ground_no_grass(90, 40, 1, 10)
 
 
 def redrawGameWindow():

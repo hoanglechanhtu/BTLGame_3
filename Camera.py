@@ -49,6 +49,12 @@ class Camera:
 
         self.deltax = self.x - self.startx
 
+        if self.deltax < 0:
+            self.deltax = 0
+
+        if (self.deltay > LVL_HEIGHT - SCREEN_HEIGHT):
+            self.deltay = LVL_HEIGHT - SCREEN_HEIGHT
+
         # if player.y > self.y + self.topBorder:
         #     self.y +=
         #self.y = SCREEN_HEIGHT- player.y
