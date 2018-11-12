@@ -6,6 +6,7 @@ from Setup import *
 import math
 import random
 from Particle import *
+from start_screen import *
 
 (width,height) = (SCREEN_WIDTH,SCREEN_HEIGHT)
 
@@ -23,7 +24,7 @@ env.addFunctions1(['move','drag','gravity'])
 env.addFunctions2(['collide'])
 d = 0
 
-
+pygame.font.init()
 
 char = Player(playerStartPosition[0]+100,playerStartPosition[1],playerSize[0],playerSize[1],env)
 env.setUpPlayer(char)
@@ -54,13 +55,12 @@ for layer in game_map.tile_array:
         elif tile.type == 'enemy5':
             p = BoxTrigger(x,y,playerSize[0],playerSize[1],env)
             env.particles.append(p)
-        
+
 print("number " + str(d))
 
 
-
-
-
+menu = StartMenu()
+isIntro = True
 
 clock = pygame.time.Clock()
 
@@ -73,57 +73,76 @@ selectedParticle = None
 first = 0
 last = 0
 while running:
+    if isIntro:
+        clock.tick(10)
+        keys = pygame.key.get_pressed()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-    last = pygame.time.get_ticks()/1000.0
-    #clock.tick(27)
-    print( 1.0/(last -first))
-    first = last
-    win.fill(env.colour)
-    keys = pygame.key.get_pressed()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            (mouseX, mouseY) = pygame.mouse.get_pos()
-            selectedParticle= env.findParticles(mouseX,mouseY)
-        elif event.type == pygame.MOUSEBUTTONUP:
-            char.shot()
-            selectedParticle = None
-    if keys[pygame.K_a]:
-        char.moveLeft()
+        if keys[pygame.K_DOWN]:
+            menu.change_option(True)
+        if keys[pygame.K_UP]:
+            menu.change_option(False)
 
-    if keys[pygame.K_d]:
-        char.moveRight()
-    if keys[pygame.K_LEFT]:
-        camera.moveLeft()
-    if keys[pygame.K_RIGHT]:
-        camera.moveRight()
-    if keys[pygame.K_DOWN]:
-        camera.moveDown()
-    if keys[pygame.K_UP]:
-        camera.moveUp()
+        if keys[pygame.K_RETURN]:
+            if (menu.chosen_option == 0):
+                isIntro = False
+            elif menu.chosen_option == len(menu.options) - 1:
+                running = False
+        menu.draw(win, 550)
+    else:
+        last = pygame.time.get_ticks()/1000.0
+        #clock.tick(27)
+        print( 1.0/(last -first))
+        first = last
+        win.fill(env.colour)
+        keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_w]:
-        char.jump()
-    if keys[pygame.K_v]:
-        pass#char.shot()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                (mouseX, mouseY) = pygame.mouse.get_pos()
+                selectedParticle= env.findParticles(mouseX,mouseY)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                char.shot()
+                selectedParticle = None
+        if keys[pygame.K_a]:
+            char.moveLeft()
 
-    camera.update(char)
+        if keys[pygame.K_d]:
+            char.moveRight()
+        if keys[pygame.K_LEFT]:
+            camera.moveLeft()
+        if keys[pygame.K_RIGHT]:
+            camera.moveRight()
+        if keys[pygame.K_DOWN]:
+            camera.moveDown()
+        if keys[pygame.K_UP]:
+            camera.moveUp()
 
-    env.update()
+        if keys[pygame.K_w]:
+            char.jump()
+        if keys[pygame.K_v]:
+            pass#char.shot()
 
-    redrawGameWindow()
-    #char.draw(win)
-    env.draw()
-    for p in env.particles:
-    
-        if p.type == 1:
-    
-    
-            pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
-        if p.type == 2:
-            pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
-            pass
+        camera.update(char)
+
+        env.update()
+
+        redrawGameWindow()
+        #char.draw(win)
+        env.draw()
+        for p in env.particles:
+
+            if p.type == 1:
+
+
+                pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
+            if p.type == 2:
+                pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
+                pass
 
 
     #
@@ -141,4 +160,3 @@ while running:
 
     pygame.display.update()
     #clock.tick(1 / updateRate)
-
