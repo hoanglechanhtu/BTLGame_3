@@ -17,7 +17,7 @@ down_tile_right = pygame.image.load('asset/Environment/DownTileRight.png')
 ladder = pygame.image.load('asset/Environment/ladder.png')
 up_tile_grass = pygame.transform.scale(pygame.image.load('asset/Environment/ground_with_grass_2.jpg'), (IMG_WIDTH, IMG_HEIGHT))
 up_tile_normal = pygame.transform.scale(pygame.image.load('asset/Environment/UpTileNormal.png'),(IMG_WIDTH, IMG_HEIGHT))
-
+water = pygame.transform.scale(pygame.image.load('asset/Environment/water.png'),(IMG_WIDTH, IMG_HEIGHT))
 #load background
 bg1 = pygame.transform.scale(pygame.image.load('asset/Environment/background/plx-1.png') , (SCREEN_WIDTH, SCREEN_HEIGHT))
 bg2 = pygame.transform.scale(pygame.image.load('asset/Environment/background/plx-2.png') , (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -78,7 +78,7 @@ class Map:
         for i in range(top_left_index_Y - depth, top_left_index_Y):
             for j in range(top_left_index_X, top_left_index_X + length):
                 self.tile_array[NUM_TILES_LVL_VERTICAL - 2 - i][j] = Tile('water', j, NUM_TILES_LVL_VERTICAL - 2 - i)
-                self.tile_array[NUM_TILES_LVL_VERTICAL - 2 - i][j].set_img(up_tile_normal)
+                self.tile_array[NUM_TILES_LVL_VERTICAL - 2 - i][j].set_img(water)
 
     def build_ground_with_grass(self, top_left_index_X, top_left_index_Y, length, depth):
         #length is the number of tiles horizontally for this section of the ground
@@ -129,9 +129,13 @@ game_map.build_ground_with_grass(111,20,10,3)
 game_map.build_tile_with_type(117, 21, 'enemy1')
 
 game_map.build_tile_with_type(135, 4, 'box')
+game_map.build_tile_with_type(133, 4, 'box')
 game_map.build_water(143,2,27,3)
-game_map.build_tile_with_type(160,3, 'enemy5')
+game_map.build_tile_with_type(160,4, 'enemy5')
+game_map.build_tile_with_type(155,11, 'enemy6')
+game_map.build_ground_with_grass(140,10,10,3)
 game_map.build_ground_with_grass(165,3,50,4)
+game_map.build_tile_with_type(65,20, 'enemy4')
 game_map.build_ground_with_grass(185,8,3,5)
 game_map.build_ground_with_grass(192,11,10,3)
 game_map.build_ground_with_grass(205,15,10,3)

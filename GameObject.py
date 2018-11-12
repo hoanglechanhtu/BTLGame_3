@@ -171,6 +171,33 @@ class Box(GameObject,object):
         print("Kill")
         self.env.removeParticle(self.particle)
 
+class Water(GameObject,object):
+    def __init__(self, x, y, width, height, env):
+        super(Water, self).__init__(x, y, width, height, env)
+        self.particle = BoxParticle(x,y,width,height)
+        self.particle.static = True
+        self.env.particles.append(self.particle)
+        self.particle.parent = self
+        self.name = "Water"
+
+    def kill(self):
+        print("Kill")
+        #self.env.removeParticle(self.particle)
+        #self.tile.type = 0
+
+class Box(GameObject,object):
+    def __init__(self, x, y, width, height, env):
+        super(Box, self).__init__(x, y, width, height, env)
+        self.particle = BoxParticle(x,y,width,height)
+        self.particle.static = False
+        self.env.particles.append(self.particle)
+        self.particle.parent = self
+        self.name = "Box"
+    def draw(self,win):
+        win.blit(box, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
+    def kill(self):
+        print("Kill")
+        self.env.removeParticle(self.particle)
 
 class Bullet(GameObject,object):
     def __init__(self, x, y, width, height, env,_from):
@@ -397,7 +424,7 @@ class Boss(Enemy, object):
         self.hp = 10
         self.state = idle
         self.animationCount = 0
-        self.shotCd = 5
+        self.shotCd = 10
         self.shotTimer = self.shotCd
         self.particle.isInAir = True
         self.particle.isAffectByGravity = False

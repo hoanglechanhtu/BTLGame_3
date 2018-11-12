@@ -19,6 +19,13 @@ def boxCollideBox(p1,p2):
     dy = p1.y - p2.y
     distance = math.hypot(dy, dx)
     if p1.getMinX()  < p2.getMaxX() and p1.getMaxX() > p2.getMinX()and p1.getMinY()<p2.getMaxY() and p1.getMaxY() > p2.getMinY() :
+        if not p1.parent == None and not p2.parent== None:
+            if  p1.parent.name == "Water" and p2.parent.name == "Player":
+                p2.parent.kill()
+                return
+            if p2.parent.name == "Water" and p1.parent.name == "Player":
+                p1.parent.kill()
+                return
         if p1.isTrigger:
             p1.hit(p2)
             return
@@ -318,7 +325,7 @@ class BoxTrigger(BoxParticle, object):
     def hit(self, particle):
         if particle.parent.name == 'Player':
             if self.currentTime < self.times:
-                p = TruckEffect(self.x, self.y - 50, truckRun, 1, 1, self.env)
+                p = TruckEffect(self.x+1000, self.y - 120, truckRun, 1, 1, self.env)
                 self.currentTime +=1
             self.isHit = True
 class CoinTrigger(BoxParticle, object):

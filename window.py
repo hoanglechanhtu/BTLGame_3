@@ -42,8 +42,11 @@ for layer in game_map.tile_array:
 
             particle= Ground(x, y, width, height, env)
             particle.tile = tile
-        # elif tile.type == "box":
-        #    box = Box(x,y,playerSize[0],playerSize[1],env)
+        elif tile.type == "water":
+            particle = Water(x, y, width, height, env)
+            particle.tile = tile
+        elif tile.type == "box":
+           box = Box(x,y,playerSize[0],playerSize[1],env)
 
         elif tile.type == "enemy1"or tile.type == "enemy2" or tile.type == "enemy3":
             enemy = Enemy(x,y,playerSize[0],playerSize[1],char,env)

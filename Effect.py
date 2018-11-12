@@ -54,7 +54,7 @@ class CoinEffect(Effect,object):
 class TruckEffect(Effect,object):
     def __init__(self,x,y,effect,t,numberOfSprite,env):
         super(TruckEffect,self).__init__(x,y,effect,t,numberOfSprite,env)
-        self.timeToStop = 1
+        self.timeToStop = 5
         self.spawnEnemyTime = 1
         self.numberOfEnemy = 5
     def update(self):
