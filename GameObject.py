@@ -393,6 +393,10 @@ class Enemy(GameObject, object):
         pass
 
     def update(self):
+        if self.player.x < self.x:
+            self.direction =  Left
+        else:
+            self.direction = Right
         if self.particle.isInAir:
             self.particle.speed = 5
             return
@@ -596,7 +600,10 @@ class Boss(Enemy, object):
         if self.hp <=0:
             self.changeState(die)
             self.particle.isAffectByGravity = True
-        self.hp -=1
+
+
+        if  self.env.player.upgrade == 3:
+            self.hp -=1
         hitSound.play()
 
         #self.changeState(die)
