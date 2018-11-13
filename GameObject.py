@@ -1,6 +1,6 @@
 import  pygame
 
-from Gameover import GameOver
+from GameState import GameState
 from Particle import *
 from Enviroment import *
 from Setup  import  *
@@ -137,7 +137,7 @@ class Player(GameObject, object):
         if self.state == die:
             print("Dead")
             if self.isDead is False:
-                GameOver.getInstance().reduce_life()
+                GameState.getInstance().reduce_life()
                 self.isDead = True
             win.blit(playerDie, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
             return
@@ -563,7 +563,7 @@ class Boss(Enemy, object):
 
 
 
-        self.hp = 10
+        self.hp = 5
         self.state = idle
         self.animationCount = 0
         self.shotCd = 10
@@ -652,6 +652,7 @@ class Boss(Enemy, object):
             self.deadTimer -= 1.0/27.0
             if self.deadTimer < 0:
                 self.env.removeParticle(self.particle)
+                GameState.getInstance().on_boss_death()
             return
 
 

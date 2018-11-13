@@ -84,8 +84,6 @@ clock = pygame.time.Clock()
 
 delta = updateRate
 
-
-
 selectedParticle = None
 first = 0
 last = 0
@@ -104,26 +102,37 @@ while running:
 
         if keys[pygame.K_RETURN]:
             if (menu.chosen_option == 0):
-
                 isIntro = False
             elif menu.chosen_option == len(menu.options) - 1:
                 running = False
         menu.draw(win, 550)
-    elif GameOver.getInstance().is_game_over():
+    elif GameState.getInstance().is_game_over():
+        clock.tick(5)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_RETURN]:
-            GameOver.getInstance().reset()
+        if keys[pygame.K_SPACE]:
             isIntro = True
+            GameState.getInstance().reset()
 
-        GameOver.getInstance().draw(win, 400)
+        GameState.getInstance().draw_game_over(win, 750)
+    elif GameState.getInstance().is_game_won():
+        clock.tick(5)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_SPACE]:
+            isIntro = True
+            GameState.getInstance().reset()
+
+        GameState.getInstance().draw_game_win(win, 750)
     else:
         last = pygame.time.get_ticks()/1000.0
         #clock.tick(27)
-        print( 1.0/(last -first))
         first = last
         win.fill(env.colour)
         keys = pygame.key.get_pressed()
