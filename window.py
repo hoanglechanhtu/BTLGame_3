@@ -77,6 +77,7 @@ print("number " + str(d))
 
 menu = StartMenu()
 isIntro = True
+isGameOver = False
 
 clock = pygame.time.Clock()
 
@@ -103,10 +104,22 @@ while running:
 
         if keys[pygame.K_RETURN]:
             if (menu.chosen_option == 0):
+
                 isIntro = False
             elif menu.chosen_option == len(menu.options) - 1:
                 running = False
         menu.draw(win, 550)
+    elif GameOver.getInstance().is_game_over():
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_RETURN]:
+            GameOver.getInstance().reset()
+            isIntro = True
+
+        GameOver.getInstance().draw(win, 400)
     else:
         last = pygame.time.get_ticks()/1000.0
         #clock.tick(27)

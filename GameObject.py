@@ -1,4 +1,6 @@
 import  pygame
+
+from Gameover import GameOver
 from Particle import *
 from Enviroment import *
 from Setup  import  *
@@ -78,6 +80,10 @@ class Player(GameObject, object):
         self.shotTimer = 0
         self.particle.isInAir =True
         self.upgrade = 0
+
+        #use this variable to keep track of dead times, since the draw() is called multiple times even if the char is dead only once
+        self.isDead = False;
+
     def kill(self):
         self.changeState(die)
 
@@ -129,15 +135,21 @@ class Player(GameObject, object):
     def draw(self,win):
         #TODO move to update function
         if self.state == die:
+            print("Dead")
+            if self.isDead is False:
+                GameOver.getInstance().reduce_life()
+                self.isDead = True
             win.blit(playerDie, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
             return
+        else:
+            self.isDead = False
+
         if self.particle.isClimb == True:
             self.changeState(climp)
         if moveSpeed == 0:
             self.changeState(idle)
         if self.direction == Right:
             if self.state == climp:
-
                 win.blit(playerClimpRight, (int(self.worldToCamera()[0]), int(self.worldToCamera()[1])))
 
             if self.state == shot:

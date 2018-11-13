@@ -5,7 +5,7 @@ import GameObject as go
 
 explosion =  [pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion1.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion2.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion3.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Particle/Explosion4.png'),(playerSize[0]*3,playerSize[1]*3))]
 truckRun = [pygame.transform.scale(pygame.image.load('asset/Enemy/Vehicle/Truck1.png'),(playerSize[0]*3,playerSize[1]*3)),pygame.transform.scale(pygame.image.load('asset/Enemy/Vehicle/Truck2.png'),(playerSize[0]*3,playerSize[1]*3))]
-coin = [pygame.transform.scale(pygame.image.load('asset/Environment/coin1.png'),(playerSize[0]/2,playerSize[1]/2)),pygame.transform.scale(pygame.image.load('asset/Environment/coin2.png'),(playerSize[0]/2,playerSize[1]/2 ))]
+coin = [pygame.transform.scale(pygame.image.load('asset/Environment/coin1.png'),(playerSize[0]//2,playerSize[1]//2)),pygame.transform.scale(pygame.image.load('asset/Environment/coin2.png'),(playerSize[0]//2,playerSize[1]//2 ))]
 upgrade = [pygame.transform.scale(pygame.image.load('asset/Environment/upgrade.png'),(playerSize[0],playerSize[1])),pygame.transform.scale(pygame.image.load('asset/Environment/upgrade1.png'),(playerSize[0],playerSize[1] ))]
 explosionSound =  pygame.mixer.Sound('asset/Music/Explosion.wav')
 class Effect:

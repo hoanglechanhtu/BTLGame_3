@@ -372,7 +372,6 @@ class CoinTrigger(BoxParticle, object):
                 self.env.removeParticle(self)
                 self.env.removeEffect(self.c)
                 self.currentTime +=1
-                print  self.env.player.coin
             self.isHit = True
 
 class UpgradeTrigger(BoxParticle, object):
@@ -395,5 +394,4 @@ class UpgradeTrigger(BoxParticle, object):
                 self.env.removeParticle(self)
                 self.env.removeEffect(self.c)
                 self.currentTime +=1
-                print  self.env.player.coin
             self.isHit = True
