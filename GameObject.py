@@ -473,6 +473,7 @@ class MachineGun(Enemy, object):
         super(MachineGun,self).__init__(x,y,width,height,player,env)
         self.hp = 5
         self.shotTimer = EnemyShotCd/5.0
+        self.relaxTime = 0
     def kill(self):
         if self.state == die:
             return
@@ -487,7 +488,39 @@ class MachineGun(Enemy, object):
 
         else:
             self.hp -=1
+    def update(self):
+        self.relaxTime+= 1.0/27.0
+        if self.relaxTime >0 and self.relaxTime < 2:
+            return
+        elif self.relaxTime >= 2 and self.relaxTime <5:
+            pass
+        else:
+            self.relaxTime = 0
 
+
+        if self.player.x < self.x:
+            self.direction =  Left
+        else:
+            self.direction = Right
+        if self.particle.isInAir:
+            self.particle.speed = 5
+            return
+        if self.state == die:
+            self.deadTimer -= 1.0/27.0
+            if self.deadTimer < 0:
+                self.env.removeParticle(self.particle)
+            return
+        if self.shotTimer < 0:
+            self.shotTimer = 0
+        self.shotTimer -= 1.0 / 27.0
+
+        if self.direction == Right:
+            if self.player.x < self.x +enemyCensitiveSize[0] and self.player.x > self.x and self.player.y < self.y + enemyCensitiveSize[1] and self.player.y > self.y -self.width :
+                self.shot()
+        else:
+            if self.player.x < self.x and self.player.x > self.x  - enemyCensitiveSize[0] and  self.player.y < self.y + \
+                    enemyCensitiveSize[1] and self.player.y > self.y - self.width:
+                self.shot()
     def shot(self):
         if not self.shotTimer <= 0:
             return

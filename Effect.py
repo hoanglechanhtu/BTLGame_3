@@ -72,7 +72,7 @@ class TruckEffect(Effect,object):
                 e = go.Enemy(self.x+200,self.y+50,playerSize[0],playerSize[1],self.env.player,self.env)
                 e.changeState(idle)
                 e.moveLeft()
-                e.jump()
+
                 self.spawnEnemyTime = 2
                 self.numberOfEnemy -=1
             return

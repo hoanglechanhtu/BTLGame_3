@@ -13,7 +13,7 @@ pygame.mixer.music.load('asset/Music/backgroundMusic.mp3')
 ##header file
 
 
-#pygame.mixer.music.play(-1)
+pygame.mixer.music.play(-1)
 
 pygame.display.set_caption('Tutorial')
 background_colour = (255,255,255)
@@ -172,15 +172,16 @@ while running:
         redrawGameWindow()
         #char.draw(win)
         env.draw()
-        for p in env.particles:
-
-            if p.type == 1:
-
-
-                pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
-            if p.type == 2:
-                pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
-                pass
+        #uncomment to draw physics box
+        # for p in env.particles:
+        #
+        #     if p.type == 1:
+        #
+        #
+        #         pygame.draw.circle(win, p.colour, (int(p.x), int(p.y)), p.r, p.thickness)
+        #     if p.type == 2:
+        #         pygame.draw.rect(win,p.colour,(int(p.x - camera.deltax),int(p.y - camera.deltay),int(p.width),int(p.height)),p.thickness)
+        #         pass
 
 
     #
